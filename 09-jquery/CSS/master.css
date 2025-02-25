@@ -117,4 +117,17 @@ main {
             width: 37px;
         }
     }
+    #clear{
+        background-color: crimson;
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: .4rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        padding: .4rem 1.2rem;
+        margin: .4rem auto;
+        color: #fff;
+    }
 }
