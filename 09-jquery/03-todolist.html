@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>03-todolist</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="../css/master.css">
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+        }
+        div {
+    background-color: #ffffff;
+    border-radius: 1rem;
+    padding: 1rem;
+    width: auto;
+
+    header {
+
+        h1 {
+            text-align: center;
+            border-bottom: 1px solid blue;
+            margin: 0;
+        }
+
+        section.info {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+
+            div {
+                display: flex;
+                align-items: center;
+                gap: .5rem;
+
+                span {
+                    align-items: center;
+                    border-radius: 50%;
+                    background-color: blue;
+                    color: #fff;
+                    display: flex;
+                    height: 30px;
+                    justify-content: center;
+                    width: 30px;
+                }
+            }
+        }
+
+    }
+
+    section.list {
+        article {
+            background-color: rgb(202, 204, 204);
+            border-radius: 0.4rem;
+            display: flex;
+            gap: 4rem;
+            margin-bottom: .4rem;
+            justify-content: space-between;
+            padding-inline: 1rem;
+            align-items: center;
+
+            &.checked {
+                background-color: hwb(209 0% 0% / 0.2) !important;
+
+                p {
+                    text-decoration: line-through;
+                }
+            }
+
+            input {
+                accent-color: rgb(42, 72, 247);
+                zoom: 1.4;
+            }
+
+            button {
+                background-color: rgba(220, 20, 60, 0.63);
+                border-radius: 50%;
+                border: none;
+                cursor: pointer;
+                color: white;
+                height: 20px;
+                width: 20px;
+                transition: transform 0.4s ease-in;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+        }
+
+        article:nth-child(even) {
+            background-color: #ccc;
+        }
+
+    }
+
+    footer {
+        display: flex;
+
+        input {
+            border: 1px solid #444;
+            border-right-color: greenyellow;
+            border-radius: 0.4rem 0 0 .4rem;
+            width: 390px;
+            outline: none;
+            padding: 0.5rem;
+        }
+
+        button {
+            background-color: rgb(128, 183, 255);
+            border-radius: 0 .4rem .4rem 0;
+            border: 1px solid #444;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.4rem;
+            width: 37px;
+        }
+    }
+    #clear{
+        background-color: crimson;
+        border: 1px solid rgb(0, 0, 0);
+        border-radius: .4rem;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 1.2rem;
+        padding: .4rem 1.2rem;
+        margin: .4rem auto;
+        color: #fff;
+    }
+}
+    </style>
+</head>
+
+<body class="jquery">
+    <nav class="nav">
+        <a href="index.html">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
+                <path
+                    d="M575.8 255.5c0 18-15 32.1-32 32.1l-32 0 .7 160.2c0 2.7-.2 5.4-.5 8.1l0 16.2c0 22.1-17.9 40-40 40l-16 0c-1.1 0-2.2 0-3.3-.1c-1.4 .1-2.8 .1-4.2 .1L416 512l-24 0c-22.1 0-40-17.9-40-40l0-24 0-64c0-17.7-14.3-32-32-32l-64 0c-17.7 0-32 14.3-32 32l0 64 0 24c0 22.1-17.9 40-40 40l-24 0-31.9 0c-1.5 0-3-.1-4.5-.2c-1.2 .1-2.4 .2-3.6 .2l-16 0c-22.1 0-40-17.9-40-40l0-112c0-.9 0-1.9 .1-2.8l0-69.7-32 0c-18 0-32-14-32-32.1c0-9 3-17 10-24L266.4 8c7-7 15-8 22-8s15 2 21 7L564.8 231.5c8 7 12 15 11 24z" />
+            </svg>
+        </a>
+    </nav>
+    <main>
+        <header class="header">
+            <h1>03-todolist</h1>
+            <h2>Build a simple to-do list application.</h2>
+        </header>
+
+        <section class="section">
+            <div>
+                <header>
+                    <h1>Todo List</h1>
+                    <section class="info">
+                        <div class="tasks">
+                            <span class="num-tasks">2</span>
+                            <p class="title-task">Tasks</p>
+                        </div>
+                        <div class="remains">
+                            <span class="num-remains">1</span>
+                            <p class="title-remains">Remains</p>
+                        </div>
+                    </section>
+                </header>
+                <section class="list">
+
+                </section>
+                <footer>
+                    <input type="text" id="input-task" placeholder="Add Task" maxlength="38">
+                    <button id="add">+</button>
+                </footer>
+                <button id="clear">🗑️</button>
+            </div>
+
+        </section>
+    </main>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+    <script src="JS/app.js"></script>
+</body>
+
+</html>
