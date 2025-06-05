@@ -3,9 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>08-chaining</title>
-    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <title>08- chaining</title>
+    <link rel="shortcut icon" href="../images/jquery.ico" type="image/x-icon">
     <link rel="stylesheet" href="../css/master.css">
+    <style>
+        article.area {
+            background-image: url(img/fondo_pacman.jpg);
+            border: 2px solid #fff;
+            height: 20rem;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+
+            img.character {
+                position: absolute;
+                height: 25px;
+                width: 25px;
+                transition: all 0.2s ease-in;
+                top: 10px;
+                left: 10px;
+                transform: rotateY(180deg);
+            }
+        }
+        button.btn {
+        display: flex;
+        cursor: pointer;
+        background: #fff9;
+        border: none;
+        margin: 1rem auto;
+        border-radius: 0.4rem;
+        padding: 0.6rem 1.2rem;
+        transition: transform 0.2s ease-in;
+        &:hover {
+          transform: scale(1.05);
+        }
+      }
+    </style>
 </head>
 <body class="jquery">
     <nav class="nav">
@@ -15,16 +48,27 @@
     </nav>
     <main>
         <header class="header">
-            <h1>08-chaining</h1>
-            <h2>Chain multiple jQuery methods for concise code.</h2>
-         </header>
-
-         <section class="section">
+            <h1>08- chaining</h1>
+            <p>Chain multiple jQuery methods for concise code.</p>
             
-
-         </section>      
+        </header>
+        <section class="section">
+            <article class="area">
+                <img class="character" src="img/pac.png" alt="once caldas">
+            </article>
+            <button class="btn">Move Character</button>
+        </section>
     </main>
+    <script src="JS/jquery-3.7.1.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('.btn').click(function() {
+                $('.character').animate({'left': '335px'})
+                .animate({'top': '285px'})
+                .animate({'left': '10px'})
+                .animate({'top': '10px'})
+            })
+        })
+    </script>
 </body>
 </html>
-
-
