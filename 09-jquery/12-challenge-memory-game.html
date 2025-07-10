@@ -90,53 +90,41 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script>
-        // 16
-// 7
-// 102
-// 103
 
 class Memorama {
 
     constructor() {
-
         this.canPlay = false;
-
         this.card1 = null;
         this.card2 = null;
 
         this.availableImages = [16, 7, 102, 103];
         this.orderForThisRound = [];
-        this.cards = Array.from(document.querySelectorAll(".section figure")); // <-- Corregido
+        this.$cards = $(".section figure"); // jQuery selector
 
         this.maxPairNumber = this.availableImages.length;
 
         this.startGame();
-
     }
 
     startGame() {
-
         this.foundPairs = 0;
         this.setNewOrder();
         this.setImagesInCards();
         this.openCards();
-
     }
 
     setNewOrder() {
-
         this.orderForThisRound = this.availableImages.concat(this.availableImages);
-        this.orderForThisRound.sort( () => Math.random() - 0.5 );
-
+        this.orderForThisRound.sort(() => Math.random() - 0.5);
     }
 
     setImagesInCards() {
-        for (let key in this.cards) {
-            const card = this.cards[key];
+        this.$cards.each((key, card) => {
+            const $card = $(card);
             const image = this.orderForThisRound[key];
-            card.dataset.image = image;
+            $card.data("image", image);
 
-            // Cambia la imagen frontal (searched-image) según el número
             let imgSrc = "";
             switch (image) {
                 case 16:
@@ -152,82 +140,62 @@ class Memorama {
                     imgSrc = "img/memorama/ducatimultistrada.jpeg";
                     break;
             }
-            // Cambia el src de la imagen interna
-            card.querySelector(".searched-image img").src = imgSrc;
-        }
+            $card.find(".searched-image img").attr("src", imgSrc);
+        });
     }
+
     openCards() {
-
-        this.cards.forEach(card => card.classList.add("opened"));
-
+        this.$cards.addClass("opened");
         setTimeout(() => {
             this.closeCards();
-        }, 2000); // 2 segundos
-
+        }, 2000); // Cambia el tiempo aquí si lo deseas
     }
-    closeCards() {
 
-        this.cards.forEach(card => card.classList.remove("opened"));
+    closeCards() {
+        this.$cards.removeClass("opened");
         this.addClickEvents();
         this.canPlay = true;
-
     }
 
     addClickEvents() {
-
-        this.cards.forEach(_this => _this.addEventListener("click", this.flipCard.bind(this)));
-
+        this.$cards.off("click").on("click", this.flipCard.bind(this));
     }
 
     removeClickEvents() {
-
-        this.cards.forEach(_this => _this.removeEventListener("click", this.flipCard));
-
+        this.$cards.off("click");
     }
 
     flipCard(e) {
+        const $clickedCard = $(e.currentTarget);
 
-        const clickedCard = e.target;
-
-        if (this.canPlay && !clickedCard.classList.contains("opened")) {
-            
-            clickedCard.classList.add("opened");
-            this.checkPair( clickedCard.dataset.image );
+        if (this.canPlay && !$clickedCard.hasClass("opened")) {
+            $clickedCard.addClass("opened");
+            this.checkPair($clickedCard.data("image"));
         }
-
     }
 
     checkPair(image) {
-
         if (!this.card1) this.card1 = image;
         else this.card2 = image;
 
         if (this.card1 && this.card2) {
-            
             if (this.card1 == this.card2) {
-
                 this.canPlay = false;
-                setTimeout(this.checkIfWon.bind(this), 300)
-                
-            }
-            else {
-
+                setTimeout(this.checkIfWon.bind(this), 300);
+            } else {
                 this.canPlay = false;
-                setTimeout(this.resetOpenedCards.bind(this), 800)
-
+                setTimeout(this.resetOpenedCards.bind(this), 800);
             }
-
         }
-
     }
 
     resetOpenedCards() {
         // Busca las cartas abiertas por data-image
-        const firstOpened = document.querySelector(`.section figure.opened[data-image='${this.card1}']`);
-        const secondOpened = document.querySelector(`.section figure.opened[data-image='${this.card2}']`);
+        const $firstOpened = this.$cards.filter(`.opened`).filter((_, el) => $(el).data("image") == this.card1);
+        const $secondOpened = this.$cards.filter(`.opened`).filter((_, el) => $(el).data("image") == this.card2);
 
-        if (firstOpened) firstOpened.classList.remove("opened");
-        if (secondOpened) secondOpened.classList.remove("opened");
+        $firstOpened.removeClass("opened");
+        $secondOpened.removeClass("opened");
 
         this.card1 = null;
         this.card2 = null;
@@ -235,40 +203,30 @@ class Memorama {
     }
 
     checkIfWon() {
-
         this.foundPairs++;
-
         this.card1 = null;
         this.card2 = null;
         this.canPlay = true;
 
         if (this.maxPairNumber == this.foundPairs) {
-
             Swal.fire({
                 title: "¡Ganaste!",
                 icon: "success",
                 draggable: true
             });
             this.setNewGame();
-
         }
-
     }
 
     setNewGame() {
-
         this.removeClickEvents();
-        this.cards.forEach(card => card.classList.remove("opened"));
-
+        this.$cards.removeClass("opened");
         setTimeout(this.startGame.bind(this), 1000);
-
     }
-
 }
-document.addEventListener("DOMContentLoaded", () => {
 
+$(document).ready(function () {
     new Memorama();
-
 });
     </script>
 </body>
