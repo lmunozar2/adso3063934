@@ -52,25 +52,27 @@
 
 @section('content')
     <section class="bg-[#0006] text-white rounded-lg w-96 p-8 flex flex-col gap-4 items-center justify-center">
-        <h1 class="flex gap-4 justify-center items-center text-4xl">
+        <h1 class="flex gap-4 justify-center items-center text-4xl ">
             <svg xmlns="http://www.w3.org/2000/svg" class="size-12" fill="currentColor" viewBox="0 0 256 256"><path d="M141.66,133.66l-40,40a8,8,0,0,1-11.32-11.32L116.69,136H24a8,8,0,0,1,0-16h92.69L90.34,93.66a8,8,0,0,1,11.32-11.32l40,40A8,8,0,0,1,141.66,133.66ZM200,32H136a8,8,0,0,0,0,16h56V208H136a8,8,0,0,0,0,16h64a8,8,0,0,0,8-8V40A8,8,0,0,0,200,32Z"></path></svg>
             Login
         </h1>
-        <form method="POST" action="{{ route('login') }}">
             @csrf
             <div class="card w-full max-w-sm">
-            <form method="POST" action="{{ route('login') }}" class="card-body">
+            <form method="POST" action="{{ route('login') }}" class="card-body border-t-[1px]">
                 @csrf
                 <label class="label">Email</label>
                 <input type="text" class="input bg-[#0006]" name="email" placeholder="Email" value="{{ old('email') }}" />
                 @error('email')
-                    <small class="text-error text-xs ">{{ $message }}</small>
+                    <small class="badge badge-error w-full mt-1 text-xs py-4">
+                        <svg class="size-[1em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="currentColor"><rect x="1.972" y="11" width="20.056" height="2" transform="translate(-4.971 12) rotate(-45)" fill="currentColor" stroke-width="0"></rect><path d="m12,23c-6.065,0-11-4.935-11-11S5.935,1,12,1s11,4.935,11,11-4.935,11-11,11Zm0-20C7.038,3,3,7.037,3,12s4.038,9,9,9,9-4.037,9-9S16.962,3,12,3Z" stroke-width="0" fill="currentColor"></path></g></svg>{{ $message }}</small>
                 @enderror
 
                 <label class="label">Password</label>
                 <input type="password" class="input bg-[#0006]" name="password"placeholder="Password" />
                 @error('password')
-                    <small class="text-error text-xs ">{{ $message }}</small>
+                    <small class="badge badge-error w-full mt-1 text-xs py-4">
+                          <svg class="size-[1em]" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><g fill="currentColor"><rect x="1.972" y="11" width="20.056" height="2" transform="translate(-4.971 12) rotate(-45)" fill="currentColor" stroke-width="0"></rect><path d="m12,23c-6.065,0-11-4.935-11-11S5.935,1,12,1s11,4.935,11,11-4.935,11-11,11Zm0-20C7.038,3,3,7.037,3,12s4.038,9,9,9,9-4.037,9-9S16.962,3,12,3Z" stroke-width="0" fill="currentColor"></path></g></svg>
+                        {{ $message }}</small>
                 @enderror
 
                 <button class="btn btn-outline hover:bg-[#fff6] hover:text-white mt-4">Login</button>
@@ -81,10 +83,15 @@
                         Sign up
                     </a>
                 </p>
+                <p class="text-sm text-center mt-2">
+                    <a class="link link-default" href="{{ route('password.request') }}">
+                        Forgot your password?
+                    </a>
+                </p>
             </form>
         </div>
 
-        </form>
+        
 
 
     </section>
