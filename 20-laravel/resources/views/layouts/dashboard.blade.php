@@ -8,7 +8,16 @@
     <link href="https://cdn.jsdelivr.net/npm/daisyui@5" rel="stylesheet" type="text/css" />
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 </head>
-<body class="min-h-[100dvh] bg-[url({{ asset('images/paisaje.jpg') }})] bg-center bg-cover w-full flex flex-col gap-4 items-center justify-center p-8">
+@php
+    if(Auth::user()->role == 'Administrador') {
+        $image = 'images/noche.jpg';  
+    }elseif (Auth::user()->role == 'Customer') {
+        $image = 'images/dia.jpg';
+}
+@endphp
+<body class="min-h-[100dvh] bg-[url({{ asset($image) }})] bg-center bg-fixed bg-cover w-full flex flex-col gap-4 items-center justify-center p-8 pt-20" >
+    @include('layouts.navbar')
     @yield('content')
+    @yield('js')
 </body>
 </html>
