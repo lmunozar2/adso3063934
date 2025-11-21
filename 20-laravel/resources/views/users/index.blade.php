@@ -114,11 +114,12 @@
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="currentColor"
                             viewBox="0 0 256 256">
                             <path
-                                d="M229.66,218.34l-50.07-50.06a88.11,88.11,0,1,0-11.31,11.31l50.06,50.07a8,8,0,0,0,11.32-11.32ZM40,112a72,72,0,1,1,72,72A72.08,72.08,0,0,1,40,112Z">
+                                d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z">
                             </path>
                         </svg>
                     </a>
-                    <a href="javascript:;" class="btn btn-outline btn-error btn-xs">
+                    <a href="javascript:;" class="btn btn-outline btn-error btn-xs btn-delete"
+                        data-fullname="{{ $user->fullname }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="currentColor"
                             viewBox="0 0 256 256">
                             <path
@@ -126,6 +127,10 @@
                             </path>
                         </svg>
                     </a>
+                    <form action="{{ url('users/'.$user->id) }}" class="hidden" method="POST">
+                        @csrf
+                        @method('delete')
+                    </form>
                 </td>
             </tr>
             @endforeach
@@ -133,11 +138,10 @@
                 <td colspan="7">{{ $users->links('layouts.pagination') }}</td>
             </tr>
         </tbody>
-
         {{-- Modal --}}
-        <dialog id="modal_message" class="modal text-black">
-            <div class="modal-box">
-                <h3 class="text-lg font-bold">Congratulations!</h3>
+        <dialog id="modal_message" class="modal">
+            <div class="modal-box bg-[#fff3] text-white">
+                <h3 class="text-lg font-bold mb-2">Congratulations!</h3>
                 <div role="alert" class="alert alert-success">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 shrink-0 stroke-current" fill="none"
                         viewBox="0 0 24 24">
@@ -147,18 +151,53 @@
                     <span>{{ session('message') }}</span>
                 </div>
             </div>
-            <form method="dialog" class="modal-backdrop">
-                <button>close</button>
+            <form method="dialog" class="modal-backdrop">               
             </form>
         </dialog>
+
+        {{-- Modal Delete --}}
+        <dialog id="modal_delete" class="modal">
+            <div class="modal-box bg-[#ffffff] text-black">
+                <h3 class="text-lg font-bold mb-2">Are you sure?</h3>
+                <div role="alert" class="alert alert-error alert-soft">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                        class="h-6 w-6 shrink-0 stroke-current">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    <span>You want to delete: <strong class="fullname"></strong></span>
+                </div>
+                <div class="flex gap-2 mt-4 items-center justify-center">
+                    <button class="btn btn-outline btn-success btn-confirm">Delete!</button>
+                    <form method="dialog">
+                    <button class="btn btn-outline btn-error">Cancel</button>
+                    </form>
+                </div>
+            </div>
         @endsection
 
         @section('js')
         <script>
             $(document).ready(function() {
+                //Modal
+                const modal_message = document.getElementById('modal_message');
                 @if(session('message'))
                     modal_message.showModal();
                 @endif
+                //Ddelete User
+                $('table').on('click','.btn-delete', function () {
+                    $fullname = $(this).data('fullname')
+                    $('.fullname').text($fullname)
+                    $frm = $(this).next()
+                    modal_delete.showModal()
+                    // if(confirm('Are you sure' )) {
+                    //     alert($fullname + 'was delete')
+                    //}
+                })
+                $('.btn-confirm').click(function(e) {
+                    e.preventDefault()
+                    $frm.submit()
+                })
             })
         </script>
         @endsection
