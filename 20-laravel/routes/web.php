@@ -19,6 +19,8 @@ Route::middleware('auth')->group(function () {
         //'pets' => PetController::class,
         //'adoptions' => AdoptionController::class,
     ]);
+    // Search
+    Route::post('search/users', [UserController::class, 'search'])->name('users.search');
 });
 
 Route::get('/', function () {

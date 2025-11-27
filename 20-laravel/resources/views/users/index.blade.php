@@ -48,6 +48,8 @@
     </a>
 </div>
 {{-- Search --}}
+<form action="">
+    @csrf
 <label class="input text-white bg-[#0009] outline-none mb-8">
     <svg class="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
         <g stroke-linejoin="round" stroke-linecap="round" stroke-width="2.5" fill="none" stroke="currentColor">
@@ -55,8 +57,9 @@
             <path d="m21 21-4.3-4.3"></path>
         </g>
     </svg>
-    <input type="search" placeholder="Search..." name="qsearch" />
+    <input type="search" placeholder="Search..." name="qsearch" id="qsearch" />
 </label>
+</form>
 
 <div class="overflow-x-auto rounded-box bg-[#0009] text-white">
     <table class="table">
@@ -72,7 +75,7 @@
                 <th>Action</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody class="datalist"">
             @foreach ($users as $user)
             <tr @if($user->id % 2 == 0) class="bg-[#0006]" @endif>
                 <td class="hidden md:table-cell">{{ $user->id }}</td>
@@ -151,7 +154,7 @@
                     <span>{{ session('message') }}</span>
                 </div>
             </div>
-            <form method="dialog" class="modal-backdrop">               
+            <form method="dialog" class="modal-backdrop">
             </form>
         </dialog>
 
@@ -170,14 +173,15 @@
                 <div class="flex gap-2 mt-4 items-center justify-center">
                     <button class="btn btn-outline btn-success btn-confirm">Delete!</button>
                     <form method="dialog">
-                    <button class="btn btn-outline btn-error">Cancel</button>
+                        <button class="btn btn-outline btn-error">Cancel</button>
                     </form>
                 </div>
             </div>
-        @endsection
+            @endsection
 
-        @section('js')
-        <script>
+            @section('js')
+            <script>
+                //Modal
             $(document).ready(function() {
                 //Modal
                 const modal_message = document.getElementById('modal_message');
@@ -198,6 +202,41 @@
                     e.preventDefault()
                     $frm.submit()
                 })
+                
+                // Search
+            function debounce(func, wait) {
+                let timeout
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout)
+                        func(...args)
+                    };
+                    clearTimeout(timeout)
+                    timeout = setTimeout(later, wait)
+                }
+            }
+            const search = debounce(function(query) {
+                
+                $token = $('input[name=_token]').val()
+                
+                $.post("search/users", {'q': query, '_token': $token},
+                    function (data) {
+                        $('.datalist').html(data).hide().fadeIn(1000)
+                    }
+                )
+            }, 500)
+            $('body').on('input', '#qsearch', function(event) {
+                event.preventDefault()
+                const query = $(this).val()
+                
+                $('.datalist').html(`<tr>
+                                        <td colspan="7" class="text-center py-18">
+                                            <span class="loading loading-spinner loading-xl"></span>
+                                        </td>
+                                    </tr>`)
+                
+                search(query)
             })
-        </script>
-        @endsection
+            })
+            </script>
+            @endsection

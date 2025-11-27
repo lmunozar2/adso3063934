@@ -136,4 +136,9 @@ class Usercontroller extends Controller
             return redirect('users')->with('message', 'The user: '.$user->fullname.' has been deleted successfully.');
         }
     }
+
+    public function search(Request $request) {
+        $users = User::names($request->q)->paginate(20);
+        return view('users.search')->with('users', $users);
+    }
 }
