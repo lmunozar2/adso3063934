@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\user;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\UsersExport;
+use App\Imports\UsersImport;
 
 class Usercontroller extends Controller
 {
@@ -140,5 +144,24 @@ class Usercontroller extends Controller
     public function search(Request $request) {
         $users = User::names($request->q)->paginate(20);
         return view('users.search')->with('users', $users);
+    }
+
+    // Export Users PDF 
+    public function pdf() {
+        $users = User::all();
+        $pdf = PDF::loadView('users.pdf', compact('users'));
+        return $pdf->download('allusers.pdf');
+    }
+
+    // Export Users EXCEL 
+    public function excel() {
+        return Excel::download(new UsersExport, 'allusers.xlsx');
+    }
+
+    // Import Users EXCEL
+    public function import(Request $request) {
+        $file = $request->file('file');
+        Excel::import(new UsersImport, $file);
+        return redirect()->back()->with('message', 'Users imported successfully');
     }
 }

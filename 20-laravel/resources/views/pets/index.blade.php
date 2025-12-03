@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', 'Module Users: Laraperts🐕‍🦺')
+@section('title', 'Module Pets: Laraperts🐕‍🦺')
 
 @section('content')
 <h1 class="text-4xl text-white flex gap-2 items-center justify-center pb-4 border-b-2 border-neutral-50 mb-2">
@@ -9,17 +9,17 @@
             d="M244.8,150.4a8,8,0,0,1-11.2-1.6A51.6,51.6,0,0,0,192,128a8,8,0,0,1-7.37-4.89,8,8,0,0,1,0-6.22A8,8,0,0,1,192,112a24,24,0,1,0-23.24-30,8,8,0,1,1-15.5-4A40,40,0,1,1,219,117.51a67.94,67.94,0,0,1,27.43,21.68A8,8,0,0,1,244.8,150.4ZM190.92,212a8,8,0,1,1-13.84,8,57,57,0,0,0-98.16,0,8,8,0,1,1-13.84-8,72.06,72.06,0,0,1,33.74-29.92,48,48,0,1,1,58.36,0A72.06,72.06,0,0,1,190.92,212ZM128,176a32,32,0,1,0-32-32A32,32,0,0,0,128,176ZM72,120a8,8,0,0,0-8-8A24,24,0,1,1,87.24,82a8,8,0,1,0,15.5-4A40,40,0,1,0,37,117.51,67.94,67.94,0,0,0,9.6,139.19a8,8,0,1,0,12.8,9.61A51.6,51.6,0,0,1,64,128,8,8,0,0,0,72,120Z">
         </path>
     </svg>
-    Module Users
+    Module Pets
 </h1>
 {{-- Options --}}
 <div class="join mx-auto">
-    <a class="btn btn-outline btn-success join-item" href="{{ url('users/create') }}">
+    <a class="btn btn-outline btn-success join-item" href="{{ url('Pets/create') }}">
         <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="currentColor" viewBox="0 0 256 256">
             <path
                 d="M168,56a8,8,0,0,1,8-8h16V32a8,8,0,0,1,16,0V48h16a8,8,0,0,1,0,16H208V80a8,8,0,0,1-16,0V64H176A8,8,0,0,1,168,56Zm62.56,54.68a103.92,103.92,0,1,1-85.24-85.24,8,8,0,0,1-2.64,15.78A88.07,88.07,0,0,0,40,128a87.62,87.62,0,0,0,22.24,58.41A79.66,79.66,0,0,1,98.3,157.66a48,48,0,1,1,59.4,0,79.66,79.66,0,0,1,36.06,28.75A87.62,87.62,0,0,0,216,128a88.85,88.85,0,0,0-1.22-14.68,8,8,0,1,1,15.78-2.64ZM128,152a32,32,0,1,0-32-32A32,32,0,0,0,128,152Zm0,64a87.57,87.57,0,0,0,53.92-18.5,64,64,0,0,0-107.84,0A87.57,87.57,0,0,0,128,216Z">
             </path>
         </svg>
-        <span class="hidden md:inline">Add Users</span>
+        <span class="hidden md:inline">Add Pets</span>
     </a>
     <a class="btn btn-outline text-white hover:bg-[#fff6] hover:text-white join-item"
         href="{{ url('export/users/pdf') }}">
@@ -72,43 +72,39 @@
         <thead>
             <tr class="text-white">
                 <th class="hidden md:table-cell">Id</th>
-                <th>Photo</th>
-                <th class="hidden md:table-cell">Document</th>
-                <th>FullName</th>
-                <th class="hidden md:table-cell">Role</th>
+                <th>Iamge</th>
+                <th class="hidden md:table-cell">Name</th>
+                <th>Kind</th>
+                <th class="hidden md:table-cell">Age</th>
                 <th>Active</th>
+                <th>status</th>
                 <th>Action</th>
             </tr>
         </thead>
         <tbody class="datalist"">
-            @foreach ($users as $user)
-            <tr @if($user->id % 2 == 0) class="bg-[#0006]" @endif>
-                <td class="hidden md:table-cell">{{ $user->id }}</td>
+            @foreach ($pets as $pet)
+            <tr @if($pet->id % 2 == 0) class="bg-[#0006]" @endif>
+                <td class="hidden md:table-cell">{{ $pet->id }}</td>
                 <td>
                     <div class="avatar">
                         <div class="mask mask-squircle w-12">
-                            <img src="{{ asset('images/'.$user->photo) }}" />
+                            <img src="{{ asset('images/'.$pet->image) }}" />
                         </div>
                     </div>
-                </td>
-                <td class="hidden md:table-cell">{{ $user->document }}</td>
-                <td>{{ $user->fullname }}</td>
-                <td class="hidden md:table-cell">
-                    @if ($user->role == 'Administrador')
-                    <div class="badge badge-outline badge-info">Admin</div>
-                    @else
-                    <div class="badge badge-outline badge-warning">Customer</div>
-                    @endif
-                </td>
+                </td>                
+                <td>{{ $pet->name }}</td>    
+                <td>{{ $pet->kind }}</td>
+                <td>{{ $pet->age }}</td>            
                 <td>
-                    @if($user->active == 1)
+                    @if($pet->active == 1)
                     <div class="badge badge-outline badge-success">Active</div>
                     @else
                     <div class="badge badge-outline badge-error">Inactive</div>
                     @endif
                 </td>
+                <td>{{ $pet->status }}</td>
                 <td class="flex gap-2">
-                    <a href="{{ url('users/'. $user->id) }}"
+                    <a href="{{ url('pets/'. $pet->id) }}"
                         class="btn btn-outline text-white hover:bg-[#fff6] hover:text-white btn-xs">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="currentColor"
                             viewBox="0 0 256 256">
@@ -117,7 +113,7 @@
                             </path>
                         </svg>
                     </a>
-                    <a href="{{ url('users/'. $user->id.'/edit') }}"
+                    <a href="{{ url('pets/'. $pet->id.'/edit') }}"
                         class="btn btn-outline text-white hover:bg-[#fff6] hover:text-white btn-xs">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="currentColor"
                             viewBox="0 0 256 256">
@@ -127,7 +123,7 @@
                         </svg>
                     </a>
                     <a href="javascript:;" class="btn btn-outline btn-error btn-xs btn-delete"
-                        data-fullname="{{ $user->fullname }}">
+                        data-fullname="{{ $pet->name }}">
                         <svg xmlns="http://www.w3.org/2000/svg" class="size-6" fill="currentColor"
                             viewBox="0 0 256 256">
                             <path
@@ -135,7 +131,7 @@
                             </path>
                         </svg>
                     </a>
-                    <form action="{{ url('users/'.$user->id) }}" class="hidden" method="POST">
+                    <form action="{{ url('pets/'.$pet->id) }}" class="hidden" method="POST">
                         @csrf
                         @method('delete')
                     </form>
@@ -143,7 +139,7 @@
             </tr>
             @endforeach
             <tr class="bg-[#0009]">
-                <td colspan="7">{{ $users->links('layouts.pagination') }}</td>
+                <td colspan="7">{{ $pets->links('layouts.pagination') }}</td>
             </tr>
         </tbody>
         {{-- Modal --}}

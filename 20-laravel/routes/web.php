@@ -2,8 +2,10 @@
 
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Models\User;
+use App\Models\Pet;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PetController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -16,11 +18,19 @@ Route::get('/dashboard', function () {
 Route::middleware('auth')->group(function () {
     Route::resources([
         'users' => UserController::class,
-        //'pets' => PetController::class,
+        'pets'  => PetController::class,
         //'adoptions' => AdoptionController::class,
     ]);
     // Search
     Route::post('search/users', [UserController::class, 'search'])->name('users.search');
+
+    // Export Users PDF 
+    Route::get('export/users/pdf', [UserController::class, 'pdf']);
+    // Export Users EXCEL
+    Route::get('export/users/excel', [UserController::class, 'excel']);
+    // Import Users 
+    Route::post('import/users',[UserController::class, 'import']);
+
 });
 
 Route::get('/', function () {
@@ -41,10 +51,6 @@ Route::get('show/pets', function () {
     dd($pets->toArray()); // Dump & Die 
 });
 
-Route::get('show/pet/{id}', function () {
-    $pet = App\Models\Pet::find(request()->id);
-    dd($pet->toArray()); // Dump & Die 
-});
 
 Route::get('challenge', function () {
     $users = App\Models\User::take(20)->get();
