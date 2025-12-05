@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Adoption extends Model
 {
@@ -25,4 +26,25 @@ class Adoption extends Model
     public function pet() {
         return $this->belongsTo(Pet::class);
     }
+
+    public function scopenames(Builder $query, $q)
+    {
+        if ($q = trim($q)) {
+
+            // Búsqueda por nombre de usuario
+            $query->whereHas('user', function (Builder $userQuery) use ($q) {
+                $userQuery->where('fullname', 'LIKE', "%{$q}%");
+            })
+
+                // Búsqueda por nombre de mascota
+                ->orWhereHas('pet', function (Builder $petQuery) use ($q) {
+                    $petQuery->where('name', 'LIKE', "%{$q}%");
+                })
+
+                // Búsqueda por tipo de mascota
+                ->orWhereHas('pet', function (Builder $petQuery) use ($q) {
+                    $petQuery->where('kind', 'LIKE', "%{$q}%");
+                });
+        }
+        }
 }

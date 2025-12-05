@@ -59,7 +59,8 @@
         <input type="search" placeholder="Search..." name="qsearch" id="qsearch" />
     </label>
 </form>
-
+@csrf
+<div class="datalist flex justify-center items-center flex-col gap-4">
 @foreach($adopts as $adopt)
 <div class="avatar-group mt-8 -space-x-6">
     <div class="avatar">
@@ -84,6 +85,7 @@
 </a>
 <span class="border b-1 border-dashed mt-8 border-[#fff8] w-4/12"></span>
 @endforeach
+</div>
 
 @endsection
 
@@ -105,7 +107,7 @@
                 
                 $token = $('input[name=_token]').val()
                 
-                $.post("search/pets", {'q': query, '_token': $token},
+                $.post("search/adoptions", {'q': query, '_token': $token},
                     function (data) {
                         $('.datalist').html(data).hide().fadeIn(1000)
                     }
@@ -115,21 +117,19 @@
                 event.preventDefault()
                 const query = $(this).val()
                 
-                $('.datalist').html(`<tr>
-                                        <td colspan="7" class="text-center py-18">
-                                            <span class="loading loading-spinner loading-xl"></span>
-                                        </td>
-                                    </tr>`)
-                
+                $('.datalist').html(`
+                                    <div class="text-center py-18">
+                                        <span class="loading loading-spinner loading-xl"></span>
+                                    </div>
+                                    `)
                 if(query != '') {
                     search(query)
                 } else {
                     setTimeout(() => {
-                        window.location.replace('pets')
+                        window.location.replace('adoptions')
                     }, 500)
-            }
+                }
+                
             })
-
-           
 </script>
 @endsection

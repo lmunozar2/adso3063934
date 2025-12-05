@@ -14,7 +14,6 @@
     <td class="hidden md:table-cell">{{ $pet->breed }}</td>
     <td class="hidden md:table-cell">{{ $pet->location }}</td>
 
-
     <td class="hidden md:table-cell">
         @if($pet->active == 1)
         <div class="badge badge-outline badge-success">Active</div>

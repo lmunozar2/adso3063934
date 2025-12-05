@@ -17,6 +17,7 @@ Route::get('/dashboard', function () {
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
+    Route::group(['middleware' => 'admin'], function(){
     Route::resources([
         'users' => UserController::class,
         'pets'  => PetController::class,
@@ -53,6 +54,7 @@ Route::middleware('auth')->group(function () {
     
     // Import Users 
     Route::post('import/users', [UserController::class, 'import']);
+    });
 });
 
 Route::get('/', function () {
