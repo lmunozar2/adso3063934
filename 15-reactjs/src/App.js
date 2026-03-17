@@ -23,7 +23,7 @@ function App() {
           <Route path="/example5" element={<Example5Eventos />} />
           <Route path="/example6" element={<Example6CondicionalListas />} />
           <Route path="/example7/*" element={<Example7Routing />} />
-          <Route path="/example8" element={<Example8DataFetching />} />
+          <Route path="/example8/*" element={<Example8DataFetching />} />
         </Routes>
       </div>
     </BrowserRouter>

@@ -1,0 +1,147 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API JS: Larapets</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.18/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="css/master.css">
+</head>
+
+<body>
+    <!-- View: Login -->
+    <main id="login" class="">
+        <header>
+            <img src="imgs/user-circle-dashed.svg" alt="">
+            <h1>Login</h1>
+        </header>
+        <img class="background" src="imgs/fondo2.jpg" alt="">
+        <form action="" id="loginForm">
+            <label for="">Email:
+                <input type="email" name="email" id="email" placeholder="Example@gmail.com">
+            </label>
+            <label for=""> Password
+                <input type="password" name="password" id="password" placeholder="*********">
+            </label>
+            <button class="btnLogin">Login</button>
+        </form>
+    </main>
+    <!-- View: Dashboard -->
+    <main id="Dashboard" class="">
+        <header>
+            <img class="tittle" src="imgs/squares-four.svg" alt="">
+            <h1 class="tittle">Dashboard</h1>
+        </header>
+        
+        <nav>
+            <button type="button" class="btnAdd">
+                <img class="icon" src="imgs/plus-circle.svg" alt="">
+            </button>
+            <button type="button" class="btnLogout">
+                <img class="icon" src="imgs/sign-out.svg" alt="">
+            </button>
+        </nav>
+        <h2>Pet List</h2>
+        <section class="list">
+            
+        </section>
+    </main>
+    <!-- View: Add-->
+    <main id="Add" class="">
+        <header>
+            <button type="button" class="btnBack">
+                <img src="imgs/arrow-line-left.svg" alt="">
+            </button>
+            <img src="imgs/plus-circle.svg" alt="">
+            <h1>Add Pet</h1>
+        </header>
+        <form action="" >
+            <label for="name">Name
+                <input type="text" name="name" id="name" placeholder="Enter pet's name">
+            </label>
+            <label for="kind"> Kind
+                <input type="text" name="kind" id="kind" placeholder="Enter pet's kind">
+            </label>
+            <label for="weight"> Weight
+                <input type="number" name="weight" id="weight" placeholder="Enter pet's weight">
+            </label>
+            <label for="age"> Age
+                <input type="number" name="age" id="age" placeholder="Enter pet's age">
+            </label>
+            <label for="breed"> Breed
+                <input type="text" name="breed" id="breed" placeholder="Enter pet's breed">
+            </label>
+            <label for="location"> Location
+                <input type="text" name="location" id="location" placeholder="Enter pet's location">
+            </label>
+            <label for="description"> Description
+                <textarea name="description" id="description" placeholder="Enter pet's description"></textarea>
+            </label>
+            <div class="action">
+                <button type="button" class="Add"> Add</button>
+                <button type="button" class="btnCancel">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </main>
+    <!-- View: Edit-->
+    <main id="Edit" class="">
+        <header>
+            <button type="button" class="btnBack">
+                <img src="imgs/arrow-line-left.svg" alt="">
+            </button>
+            <img src="imgs/pencil.svg" alt="">
+            <h1>Edit Pet</h1>
+        </header>
+        <form action="">
+            <label for="Name">Name
+                <input type="text" name="name" id="name" placeholder="Firulais">
+            </label>
+            <label for="kind"> Kind
+                <input type="text" name="kind" id="kind" placeholder="Dog">
+            </label>
+            <label for="weight"> Weight
+                <input type="number" name="weight" id="weight" placeholder="10 kg">
+            </label>
+            <label for="age"> Age
+                <input type="number" name="age" id="age" placeholder="2 years">
+            </label>
+            <label for="breed"> Breed
+                <input type="text" name="breed" id="breed" placeholder="Golden Retriever">
+            </label>
+            <label for="location"> Location
+                <input type="text" name="location" id="location" placeholder="Manizales">
+            </label>
+            <label for="description"> Description
+                <textarea name="description" id="description" placeholder="It is a friendly and loyal dog."></textarea>
+            </label>
+            <div class="action">
+                <button type="button" class="btnEdit">Edit</button>
+                <button type="button" class="btnCancel">
+                    Cancel
+                </button>
+            </div>
+        </form>
+    </main>
+    <!-- View: Detail -->
+     <main id="Detail" class="">
+        <header>
+            <button type="button" class="btnBack">
+                <img src="imgs/arrow-line-left.svg" alt="">
+            </button>
+            <img src="imgs/eye.svg" alt="">
+            <h1>Detail Pet</h1>
+        </header>
+        <div class="data">
+
+        </div>
+    </main>
+
+    <script src="js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.18/dist/sweetalert2.all.min.js"></script>
+</body>
+
+</html>
