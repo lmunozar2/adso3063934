@@ -29,6 +29,7 @@ async function main() {
             {
                 name: 'PlayStation 5',
                 manufacturer: 'Sony Interactive Entertainment',
+                image: 'Ps5',
                 releasedate: new Date('2020-11-12'),
                 description:
                     'The PlayStation 5 (PS5) is a home video game console bringing 4K gaming at 120Hz and ray tracing support.',
@@ -36,6 +37,7 @@ async function main() {
             {
                 name: 'Xbox Series X',
                 manufacturer: 'Microsoft',
+                image: 'Xbox',
                 releasedate: new Date('2020-11-10'),
                 description:
                     'The Xbox Series X is a high-performance console, featuring a custom AMD processor and 12 TFLOPS of graphical power.',
@@ -50,6 +52,7 @@ async function main() {
             {
                 name: 'Nintendo Switch 2',
                 manufacturer: 'Nintendo',
+                image: 'Switch2',
                 releasedate: new Date('2025-06-05'),
                 description:
                     'The successor to the popular Nintendo Switch, featuring larger magnetic Joy-cons and enhanced performance.',
@@ -57,6 +60,7 @@ async function main() {
             {
                 name: 'Steam Deck OLED',
                 manufacturer: 'Valve',
+                image: 'Steam',
                 releasedate: new Date('2023-11-16'),
                 description:
                     'A powerful handheld gaming computer that plays PC games from your Steam library on the go.',
@@ -119,6 +123,7 @@ async function main() {
         {
             title: 'Elden Ring',
             developer: 'FromSoftware',
+            cover: 'Elden_Ring',
             releasedate: new Date('2022-02-25'),
             price: 59.99,
             genre: 'Action role-playing',
@@ -129,6 +134,7 @@ async function main() {
         {
             title: 'Forza Horizon 5',
             developer: 'Playground Games',
+            cover: 'Forza',
             releasedate: new Date('2021-11-09'),
             price: 59.99,
             genre: 'Racing',
@@ -139,6 +145,7 @@ async function main() {
         {
             title: 'Pokémon Scarlet',
             developer: 'Game Freak',
+            cover: 'Pokemon',
             releasedate: new Date('2022-11-18'),
             price: 59.99,
             genre: 'Role-playing',
@@ -149,6 +156,7 @@ async function main() {
         {
             title: 'Spider-Man 2',
             developer: 'Insomniac Games',
+            cover: 'Spiderman',
             releasedate: new Date('2023-10-20'),
             price: 69.99,
             genre: 'Action-adventure',
@@ -159,6 +167,7 @@ async function main() {
         {
             title: 'Starfield',
             developer: 'Bethesda Game Studios',
+            cover: 'Starfield',
             releasedate: new Date('2023-09-06'),
             price: 69.99,
             genre: 'Role-playing',
@@ -169,6 +178,7 @@ async function main() {
         {
             title: 'Mario Kart 9',
             developer: 'Nintendo EPD',
+            cover: 'Mario_Kart',
             releasedate: new Date('2025-12-01'),
             price: 59.99,
             genre: 'Racing',
@@ -179,6 +189,7 @@ async function main() {
         {
             title: 'Hogwarts Legacy',
             developer: 'Avalanche Software',
+            cover: 'Hogwarts_Legacy',
             releasedate: new Date('2023-02-10'),
             price: 59.99,
             genre: 'Action role-playing',
