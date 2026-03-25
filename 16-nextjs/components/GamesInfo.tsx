@@ -1,20 +1,60 @@
+import { Suspense } from 'react'
 import { PrismaClient } from '../app/generated/prisma'
 import { PrismaNeon } from '@prisma/adapter-neon'
-import PencilIcon from '../components/icons/PencilIcon'
-import PlusCircleIcon from '../components/icons/PlusIcon'
+import PencilIcon from './icons/PencilIcon'
+import PlusCircleIcon from './icons/PlusIcon'
 import TrashIcon from '../components/icons/TrashIcon'
+import SearchBar from '@/components/SearchBar'
+import Pagination from '@/components/Pagination'
+
+
 
 const prisma = new PrismaClient({
     adapter: new PrismaNeon({
         connectionString: process.env.DATABASE_URL!
     })
-})
+});
 
-export default async function GamesInfo() {
+const ITEMS_PER_PAGE = 12;
 
-    const games = await prisma.games.findMany({
-        include: { consoles: true }
-    })
+interface GamesInfoProps {
+    searchParams?: { page?: string; search?: string };
+}
+
+export default async function GamesInfo({ searchParams }: GamesInfoProps) {
+    const currentPage = Number(searchParams?.page) || 1;
+    const search = searchParams?.search ?? "";
+    const skip = (currentPage - 1) * ITEMS_PER_PAGE;
+
+    // Filtro dinámico de Prisma
+    const priceFilter = !isNaN(Number(search)) && search !== ""
+        ? { price: { equals: Number(search) } }
+        : {};
+
+    const where = search
+        ? {
+            OR: [
+                { title: { contains: search, mode: "insensitive" as const } },
+                { developer: { contains: search, mode: "insensitive" as const } },
+                { genre: { contains: search, mode: "insensitive" as const } },
+                { consoles: { is: { name: { contains: search, mode: "insensitive" as const } } } },
+                ...(priceFilter.price ? [priceFilter] : []),
+            ],
+        }
+        : {};
+
+    const [games, totalGames] = await Promise.all([
+        prisma.games.findMany({
+            where,
+            include: { consoles: true },
+            skip,
+            take: ITEMS_PER_PAGE,
+            orderBy: { id: "asc" },
+        }),
+        prisma.games.count({ where }),
+    ]);
+
+    const totalPages = Math.ceil(totalGames / ITEMS_PER_PAGE);
 
     return (
         <div className="p-8">
@@ -23,12 +63,17 @@ export default async function GamesInfo() {
                 <h1 className="text-3xl font-bold">Games</h1>
                 <a href="/games/new" className="btn btn-outline btn-sm btn-info gap-2">
                     < PlusCircleIcon />
-                    
+
                 </a>
             </div>
 
+            {/* SearchBar ocupa el espacio flexible del centro */}
+            <div className="flex justify-start mb-6 mt-2 ">
+                <SearchBar />
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {games.map(function(game) {
+                {games.map(function (game) {
                     return (
                         <div
                             key={game.id}
@@ -61,12 +106,28 @@ export default async function GamesInfo() {
                                 <div className="flex gap-2">
                                     <span className="badge badge-secondary">{game.genre}</span>
                                     <span className="badge badge-accent">${game.price}</span>
+
                                 </div>
+
                             </div>
+
+
                         </div>
                     )
                 })}
+
             </div>
+
+           
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    totalItems={totalGames}
+                    itemsPerPage={ITEMS_PER_PAGE}
+                />
+            
+
+
         </div>
     )
 }
