@@ -7,7 +7,7 @@ import GamesInfo from "@/components/GamesInfo";
 export default async function GamesPage({
     searchParams,
 }: {
-    searchParams: Promise<{ page?: string; search?: string }>;
+    searchParams: Promise<{ page?: string; search?: string; consoleId?: string }>; // 👈 agrega consoleId
 }) {
     const user = await stackServerApp.getUser();
     if (!user) {
@@ -19,9 +19,7 @@ export default async function GamesPage({
     return (
         <div>
             <SideBar currentPath={"/games"}>
-                
-                    <GamesInfo searchParams={resolvedSearchParams} />
-                
+                <GamesInfo searchParams={resolvedSearchParams} />
             </SideBar>
         </div>
     );

@@ -1,0 +1,127 @@
+"use client";
+
+import { useRef, useState } from "react";
+import TrashIcon from "@/components/icons/TrashIcon";
+import { deleteConsole } from "@/app/console/admin/Action";
+import Swal from "sweetalert2";
+
+interface Props {
+    consoleId: number;
+    consoleName: string;
+}
+
+export default function DeleteConsoleButton({ consoleId, consoleName }: Props) {
+    const modalRef = useRef<HTMLDialogElement>(null);
+    const [isPending, setIsPending] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+
+    const handleDelete = async () => {
+        setIsPending(true);
+        setError(null);
+
+        const result = await deleteConsole(consoleId);
+
+        if (!result.success) {
+            setError(result.message ?? "Something went wrong.");
+            setIsPending(false);
+        } else {
+            modalRef.current?.close();
+        }
+    };
+
+    return (
+        <>
+            {/* Botón de la card */}
+            <button
+                className="btn btn-outline btn-xs btn-error gap-1"
+                onClick={async () => {
+                  const confirm = await Swal.fire({
+                    icon: "warning",
+                    title: "Delete Console",
+                    text: `Are you sure you want to delete "${consoleName}"? This action cannot be undone.`,
+                    showCancelButton: true,
+                    confirmButtonText: "Yes, delete",
+                    cancelButtonText: "Cancel",
+                    confirmButtonColor: "#e11d48",
+                    background: "#545454",
+                    color:"white"
+                  });
+                
+                  if (confirm.isConfirmed) {
+                    setIsPending(true);
+                    const result = await deleteConsole(consoleId);
+                
+                    if (!result.success) {
+                      Swal.fire({
+                        icon: "error",
+                        title: "Error",
+                        text: result.message ?? "Something went wrong.",
+                        
+                      });
+                      setIsPending(false);
+                    } else {
+                      Swal.fire({
+                        icon: "success",
+                        title: "Deleted!",
+                        text: `"${consoleName}" was deleted successfully.`,
+                        timer: 2000,
+                        showConfirmButton: false,
+                        background: "#545454",
+                      color:"white"
+                      });
+                    }
+                  }
+                }}
+            >
+                <TrashIcon />
+            </button>
+
+            {/* Modal de confirmación */}
+            <dialog ref={modalRef} className="modal modal-bottom sm:modal-middle">
+                <div className="modal-box">
+
+                    <h3 className="font-bold text-lg">Delete Console</h3>
+                    <p className="py-4 text-base-content/70">
+                        Are you sure you want to delete{" "}
+                        <span className="font-semibold text-base-content">{consoleName}</span>?
+                        This will also affect all games linked to this console.
+                        This action cannot be undone.
+                    </p>
+
+                    {error && (
+                        <div className="alert alert-error text-sm mb-4">
+                            {error}
+                        </div>
+                    )}
+
+                    <div className="modal-action">
+                        <button
+                            className="btn btn-ghost"
+                            onClick={() => modalRef.current?.close()}
+                            disabled={isPending}
+                        >
+                            Cancel
+                        </button>
+                        <button
+                            className="btn btn-error"
+                            onClick={handleDelete}
+                            disabled={isPending}
+                        >
+                            {isPending ? (
+                                <span className="loading loading-spinner loading-sm" />
+                            ) : (
+                                "Yes, delete"
+                            )}
+                        </button>
+                    </div>
+
+                </div>
+
+                {/* Click fuera cierra el modal */}
+                <form method="dialog" className="modal-backdrop">
+                    <button type="submit">close</button>
+                </form>
+            </dialog>
+        </>
+    );
+}

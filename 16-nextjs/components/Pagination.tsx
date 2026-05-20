@@ -34,7 +34,6 @@ export default function Pagination({
     router.push(createPageURL(page));
   };
 
-  // Generate visible page numbers with ellipsis
   const getPageNumbers = () => {
     const pages: (number | "...")[] = [];
 
@@ -43,22 +42,13 @@ export default function Pagination({
     }
 
     pages.push(1);
-
-    if (currentPage > 3) {
-      pages.push("...");
-    }
+    if (currentPage > 3) pages.push("...");
 
     const start = Math.max(2, currentPage - 1);
     const end = Math.min(totalPages - 1, currentPage + 1);
+    for (let i = start; i <= end; i++) pages.push(i);
 
-    for (let i = start; i <= end; i++) {
-      pages.push(i);
-    }
-
-    if (currentPage < totalPages - 2) {
-      pages.push("...");
-    }
-
+    if (currentPage < totalPages - 2) pages.push("...");
     pages.push(totalPages);
 
     return pages;
@@ -67,83 +57,56 @@ export default function Pagination({
   if (totalPages <= 1) return null;
 
   const pages = getPageNumbers();
-  const startItem = totalItems
-    ? (currentPage - 1) * (itemsPerPage ?? 10) + 1
-    : null;
+  const startItem = totalItems ? (currentPage - 1) * (itemsPerPage ?? 10) + 1 : null;
   const endItem = totalItems
     ? Math.min(currentPage * (itemsPerPage ?? 10), totalItems)
     : null;
 
   return (
-    <div className="flex flex-col sm:flex-row items-center justify-between gap-4 mt-10 px-1">
+    <div className="flex flex-col items-center gap-3 mt-10">
       {/* Items info */}
       {totalItems && (
-        <span className="text-xs font-mono text-primary/50 uppercase tracking-widest whitespace-nowrap">
+        <span className="text-xs text-base-content/50">
           Showing{" "}
-          <span className="text-primary/80">
-            {startItem}–{endItem}
-          </span>{" "}
-          of <span className="text-primary/80">{totalItems}</span> titles
+          <span className="font-medium text-base-content">{startItem}–{endItem}</span>{" "}
+          of <span className="font-medium text-base-content">{totalItems}</span> results
         </span>
       )}
 
       {/* Page controls */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
         {/* Prev */}
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="
-            flex items-center gap-1.5 px-3 py-1.5
-            text-[11px] font-semibold uppercase tracking-widest
-            border border-white/[0.07] rounded
-            text-primary/60 hover:text-success hover:border-success/40
-            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-primary/60 disabled:hover:border-white/[0.07]
-            transition-all duration-200
-          "
+          className="btn btn-square btn-sm btn-ghost"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6" />
           </svg>
-          Prev
         </button>
 
         {/* Page numbers */}
-        <div className="flex items-center gap-1 mx-1">
+        <div className="join">
           {pages.map((page, idx) =>
             page === "..." ? (
-              <span
+              <button
                 key={`ellipsis-${idx}`}
-                className="w-8 text-center text-xs text-primary/30 select-none"
+                className="join-item btn btn-square btn-sm btn-disabled"
               >
                 ···
-              </span>
-            ) : (
-              <button
-                key={page}
-                onClick={() => handlePageChange(page as number)}
-                className={`
-                  w-8 h-8 rounded text-[12px] font-mono font-semibold
-                  border transition-all duration-200
-                  ${
-                    currentPage === page
-                      ? "bg-success/10 border-success/50 text-success shadow-[0_0_12px_rgba(0,255,150,0.08)]"
-                      : "border-white/[0.07] text-primary/50 hover:text-primary hover:border-white/20"
-                  }
-                `}
-              >
-                {page}
               </button>
+            ) : (
+              <input
+                key={page}
+                className="join-item btn btn-square btn-sm"
+                type="radio"
+                name="pagination"
+                aria-label={String(page)}
+                checked={currentPage === page}
+                onChange={() => handlePageChange(page as number)}
+              />
             )
           )}
         </div>
@@ -152,27 +115,10 @@ export default function Pagination({
         <button
           onClick={() => handlePageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="
-            flex items-center gap-1.5 px-3 py-1.5
-            text-[11px] font-semibold uppercase tracking-widest
-            border border-white/[0.07] rounded
-            text-primary/60 hover:text-success hover:border-success/40
-            disabled:opacity-30 disabled:cursor-not-allowed disabled:hover:text-primary/60 disabled:hover:border-white/[0.07]
-            transition-all duration-200
-          "
+          className="btn btn-square btn-sm btn-ghost"
         >
-          Next
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="12"
-            height="12"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          >
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24"
+            fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6" />
           </svg>
         </button>

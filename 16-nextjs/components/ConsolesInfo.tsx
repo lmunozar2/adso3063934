@@ -3,6 +3,10 @@ import { PrismaNeon } from '@prisma/adapter-neon'
 import PencilIcon from '../components/icons/PencilIcon'
 import PlusCircleIcon from '../components/icons/PlusIcon'
 import TrashIcon from '../components/icons/TrashIcon'
+import CreateConsoleModal from "@/components/modals/CreateConsoleModal"
+import EditConsoleButton from "@/components/modals/EditConsoleButton"
+import DeleteConsoleButton from "@/components/modals/DeleteConsoleButton"
+
 
 const prisma = new PrismaClient({
     adapter: new PrismaNeon({
@@ -21,10 +25,7 @@ export default async function ConsolesInfo() {
 
             <div className="flex items-center justify-between mb-8">
                 <h1 className="text-3xl font-bold">Consoles</h1>
-                <a href="/games/new" className="btn btn-outline btn-sm btn-info gap-2">
-                    < PlusCircleIcon />
-                    
-                </a>
+                <CreateConsoleModal />
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -42,12 +43,8 @@ export default async function ConsolesInfo() {
                             <div className="absolute inset-0 bg-black/30 group-hover:bg-black/60 transition-all duration-500" />
 
                             <div className="absolute top-3 right-3 flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                <a href={"/consoles/" + console.id + "/edit"} className="btn btn-outline btn-xs btn-success gap-1">
-                                    < PencilIcon />
-                                </a>
-                                <button className="btn btn-outline btn-xs btn-error gap-1">
-                                    <TrashIcon />
-                                </button>
+                                <EditConsoleButton consoleRecord={console} />
+                                <DeleteConsoleButton consoleId={console.id} consoleName={console.name} />
                             </div>
 
                             <div className="absolute bottom-0 left-0 right-0 p-4 transition-transform duration-500 group-hover:-translate-y-32">
