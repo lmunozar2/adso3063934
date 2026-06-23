@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Dashboard</title>
+  <link rel="stylesheet" href="css/styles.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Rajdhani:wght@400;600&family=Racing+Sans+One&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <div class="desktop-bg"></div>
+
+  <div class="phone-frame">
+
+    <!-- Isla dinámica -->
+    <div class="dynamic-island">
+      <div class="island-camera"></div>
+      <div class="island-speaker"></div>
+    </div>
+
+    <div class="phone-screen">
+
+      <!-- Contenido scrolleable -->
+      <div class="scroll-area">
+
+        <!-- Tarjeta 1 -->
+        <a href="detailmoto.html" class="card">
+          <img src="img/honda-cbr-1000-rr-r-fireblade-sp.jpg" alt="CBR Fireblade" class="card-img" />
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <span class="card-tag">CBR1000RR-R</span>
+            <h2 class="card-title">CREADA PARA<br>CORRER</h2>
+            <div class="card-badges">
+              <span class="badge">🏁 Pista</span>
+              <span class="badge">⚡ 217 HP</span>
+              <span class="badge">🔧 Racing</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Tarjeta 2 -->
+        <a href="detailmoto.html" class="card">
+          <img src="img/H2V4236.jpg" alt="Africa Twin" class="card-img" />
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <div class="card-logo">
+              <img src="img/logo_honda-removebg-preview.png" alt="Honda" class="mini-logo" />
+            </div>
+            <h2 class="card-title card-title--script">Africa<br><em>Twin</em></h2>
+            <p class="card-subtitle">LA VERDADERA AVENTURA</p>
+          </div>
+        </a>
+
+        <!-- Tarjeta 3 -->
+        <a href="detailmoto.html" class="card">
+          <img src="img/honda-cb650r-2024-30_7_1200x690.jpeg" alt="CB650R" class="card-img" />
+          <div class="card-overlay"></div>
+          <div class="card-content">
+            <span class="card-tag">CB650R</span>
+            <h2 class="card-title">ADICTIVA</h2>
+            <div class="card-badges">
+              <span class="badge">🛣️ Street</span>
+              <span class="badge">⚡ 95 HP</span>
+              <span class="badge">🔥 Neo Sports</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Espacio para el navbar -->
+        <div style="height: 48px; flex-shrink: 0;"></div>
+
+      </div>
+
+      <!-- ── Menú hamburguesa (drawer) ── -->
+      <div class="drawer-backdrop" id="drawerBackdrop" onclick="closeMenu()"></div>
+ 
+      <div class="drawer" id="drawer">
+ 
+        <div class="drawer-header">
+          <img src="img/logo_honda-removebg-preview.png" alt="Honda" class="drawer-logo" />
+        </div>
+ 
+        <nav class="drawer-nav">
+ 
+          <a href="dashboard.html" class="drawer-item">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M219.31,108.68l-80-80a16,16,0,0,0-22.62,0l-80,80A15.87,15.87,0,0,0,32,120v96a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V160h32v56a8,8,0,0,0,8,8h64a8,8,0,0,0,8-8V120A15.87,15.87,0,0,0,219.31,108.68ZM208,208H160V152a8,8,0,0,0-8-8H104a8,8,0,0,0-8,8v56H48V120l80-80,80,80Z"></path></svg>
+            <span>INICIO</span>
+          </a>
+ 
+          <div class="drawer-item drawer-item--toggle" onclick="toggleSubmenu()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#000000" viewBox="0 0 256 256"><path d="M216,120a41,41,0,0,0-6.6.55l-5.82-15.14A55.64,55.64,0,0,1,216,104a8,8,0,0,0,0-16H196.88L183.47,53.13A8,8,0,0,0,176,48H144a8,8,0,0,0,0,16h26.51l9.23,24H152c-18.5,0-33.5,4.31-43.37,12.46a16,16,0,0,1-16.76,2.07C81.29,97.72,31.13,77.33,26.71,75.6L21,73.36A17.74,17.74,0,0,0,16,72a8,8,0,0,0-2.87,15.46h0c.46.18,47.19,18.3,72.13,29.63a32.15,32.15,0,0,0,33.56-4.29c4.86-4,14.57-8.8,33.19-8.8h18.82a71.74,71.74,0,0,0-24.17,36.59A15.86,15.86,0,0,1,131.32,152H79.2a40,40,0,1,0,0,16h52.12a31.91,31.91,0,0,0,30.74-23.1,56,56,0,0,1,26.59-33.72l5.82,15.13A40,40,0,1,0,216,120ZM40,168H62.62a24,24,0,1,1,0-16H40a8,8,0,0,0,0,16Zm176,16a24,24,0,0,1-15.58-42.23l8.11,21.1a8,8,0,1,0,14.94-5.74L215.35,136l.65,0a24,24,0,0,1,0,48Z"></path></svg>
+            <span>MOTOCICLETAS</span>
+            <svg class="chevron" id="chevron" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"/>
+            </svg>
+          </div>
+ 
+          <div class="submenu" id="submenu">
+            <a href="motosview.html" class="submenu-item">Super sport</a>
+            <a href="motosview.html" class="submenu-item">Sport</a>
+            <a href="motosview.html" class="submenu-item">Todo terreno</a>
+            <a href="motosview.html" class="submenu-item">Scooter</a>
+            <a href="motosview.html" class="submenu-item">Enduro y motocross</a>
+            <a href="motosview.html" class="submenu-item">Aventura</a>
+          </div>
+ 
+        </nav>
+ 
+        <div class="drawer-footer">
+          <a href="profile.html" class="drawer-user">
+            <div class="drawer-avatar">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>
+              </svg>
+            </div>
+            <span class="drawer-username">Luis Muñoz</span>
+          </a>
+          <a href="index.html" class="drawer-logout">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          </a>
+        </div>
+ 
+      </div>
+ 
+      <!-- Navbar inferior -->
+      <nav class="bottom-nav">
+        <button class="nav-hamburger" onclick="openMenu()">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <line x1="3" y1="12" x2="21" y2="12"/>
+            <line x1="3" y1="18" x2="21" y2="18"/>
+          </svg>
+        </button>
+      </nav>
+ 
+    </div>
+ 
+    <div class="btn-volume-up"></div>
+    <div class="btn-volume-down"></div>
+    <div class="btn-power"></div>
+  </div>
+ 
+  <script>
+    function openMenu() {
+      document.getElementById('drawer').classList.add('drawer--open');
+      document.getElementById('drawerBackdrop').classList.add('drawer-backdrop--show');
+    }
+ 
+    function closeMenu() {
+      document.getElementById('drawer').classList.remove('drawer--open');
+      document.getElementById('drawerBackdrop').classList.remove('drawer-backdrop--show');
+      // Cierra también el submenú
+      document.getElementById('submenu').classList.remove('submenu--open');
+      document.getElementById('chevron').classList.remove('chevron--open');
+    }
+ 
+    function toggleSubmenu() {
+      document.getElementById('submenu').classList.toggle('submenu--open');
+      document.getElementById('chevron').classList.toggle('chevron--open');
+    }
+  </script>
+
+</body>
+</html>
